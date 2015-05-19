@@ -90,7 +90,6 @@ class Package(models.Model):
     def install_link(self):
         return None
 
-
     def parse_ipa(self):
         if self.ipa_path is None:
             return None
@@ -110,10 +109,11 @@ class Package(models.Model):
         media_dst_path = os.path.join(dst_dir, source_icon_name)
         shutil.copy2(icon, media_dst_path)
         self.icon_path = os.path.join("apps/icons", source_icon_name)
+        self.big_icon_path = self.icon_path
 
         return self.bundle_identifier
 
-# Create your models here.
+
 class Comment(models.Model):
     content = models.TextField()
     create_at = models.DateTimeField(auto_now_add=True)

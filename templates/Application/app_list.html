@@ -1,7 +1,6 @@
 {% extends "base-mobile.html" %}
 
 {% block extrahead %}
-
 {% endblock %}
 
 {% block content %}
@@ -29,7 +28,7 @@
             {%  for app in apps  %}
                 {% with app.package_set.all|first as pack %}
                     <li>
-                    {{ app.get_absolute_url }}12
+                    {{ app.get_absolute_url }}
                     <a href="{% url 'apps' %}{{ app.id }}"  data-transition="slide">
                         {# TODO Lazy loading image #}
                         {% if pack.big_icon_path  %}
@@ -40,7 +39,6 @@
                         <h3>{{ pack.bundle_name }}</h3>
                         <p><strong>{{ pack.bundle_short_version }}</strong></p>
                         <p>Build Version <strong>{{ pack.bundle_version }}</strong> ({{ pack.create_at }})</p>
-{#                        {% url app-install as app_install_url %}#}
                         {% url 'app-install' as app_install_url %}
                         <a type="button" href="itms-services://?action=download-manifest&url={{host|urlencode:""}}{{ app_install_url|urlencode:"" }}{{"?pack_id="|urlencode:""}}{{ pack.id }}">Install</a>
                     </a>
@@ -50,7 +48,7 @@
 
             <li data-role="list-divider">Provisioning Profiles</li>
             {%  for prov in provs  %}
-                <li style="height:80;">
+                <li>
                     <img class="rounded_icon" src="{{ STATIC_URL }}Application/img/prov.png">
                     {% url 'main' as main_url %}
                     <a href="{{ main_url }}/app"  data-transition="slide" ></a>
