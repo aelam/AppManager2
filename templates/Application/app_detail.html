@@ -1,0 +1,39 @@
+{% extends "base-mobile.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}Application/css/app.css" type="text/css" charset="utf-8">
+{% endblock %}
+{% block title %}{{ app.app_name }} {% endblock %}
+
+{% block content %}
+    {% block header %}
+    {% endblock %}
+
+    <div class="content-primary">
+        <ul data-role="listview">
+            {%  for pack in packages  %}
+                <li>
+{#                    {% with app.package_set.all|first as pack %}#}
+
+                        <a href="{% url main %}{{ app.id }}">
+{#                            <img class="rounded_icon" src="{{ MEDIA_URL }}{{ pack.big_icon_path }}" width="70" height="70" style="margin-top: 10px;margin-left:10px" />#}
+                            {% if pack.big_icon_path  %}
+                                <img class="rounded_icon lazy" src="{{ MEDIA_URL }}{{ pack.big_icon_path }}"/>
+                            {% else %}
+                                <img class="rounded_icon lazy" src="{{ STATIC_URL }}Application/img/archive.png" a="middle"/>
+                            {% endif %}
+                            <h3>{{ pack.bundle_name }}</h3>
+                            <p><strong>{{ pack.bundle_version }}</strong> ({{ pack.create_at }})</p>
+{#                            <a type="button" class="install_button" href="itms-services://?action=download-manifest&url={{host|urlencode:""}}{% url apps %}}{{"install/?pack_id="|urlencode:""}}{{ pack.id }}">Install</a>#}
+{#                            {% url app-install as app_install %}#}
+                            {% url app-install as app_install_url %}
+{#                            <a type="button" href="itms-services://?action=download-manifest&url={{host|urlencode:""}}{{ app_install_url|urlencode:"" }}{{"?pack_id="|urlencode:""}}{{ pack.id }}">Install</a>#}
+                        </a>
+{#                    {% endwith %}#}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+
+{% endblock %}

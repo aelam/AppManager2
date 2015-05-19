@@ -1,0 +1,66 @@
+{% extends "base-mobile.html" %}
+
+{% block extrahead %}
+
+{% endblock %}
+
+{% block content %}
+    {{ SCRIPT_PREFIX }}
+    {% if flavour != "mobile" %}
+        <form method="POST" action="{% url 'apps' %}upload/" enctype="multipart/form-data" name="form" data-ajax="false"
+              xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+              xmlns="http://www.w3.org/1999/html">  {% csrf_token %}
+         <ul data-role="listview" data-split-icon="plus" data-theme="a">
+             <li>
+             <p><strong>上传IPA</strong></p>
+             {% for field in form %}
+                 {{ field.errors }}
+                 {{ field }}
+            {% endfor %}
+             </li>
+         <p><input type="submit" value="上传" /></p>
+           </ul>
+        </form>
+    {% endif %}
+
+    <div class="content-primary">
+        <ul data-role="listview" data-split-icon="plus" data-theme="c">
+            <li data-role="list-divider">Apps</li>
+            {%  for app in apps  %}
+                {% with app.package_set.all|first as pack %}
+                    <li>
+                    {{ app.get_absolute_url }}12
+                    <a href="{% url 'apps' %}{{ app.id }}"  data-transition="slide">
+                        {# TODO Lazy loading image #}
+                        {% if pack.big_icon_path  %}
+                            <img class="rounded_icon lazy" src="{{ MEDIA_URL }}{{ pack.big_icon_path }}" a="middle"/>
+                        {% else %}
+                            <img class="rounded_icon lazy" src="{{ STATIC_URL }}Application/img/archive.png" a="middle"/>
+                        {% endif %}
+                        <h3>{{ pack.bundle_name }}</h3>
+                        <p><strong>{{ pack.bundle_short_version }}</strong></p>
+                        <p>Build Version <strong>{{ pack.bundle_version }}</strong> ({{ pack.create_at }})</p>
+{#                        {% url app-install as app_install_url %}#}
+                        {% url 'app-install' as app_install_url %}
+                        <a type="button" href="itms-services://?action=download-manifest&url={{host|urlencode:""}}{{ app_install_url|urlencode:"" }}{{"?pack_id="|urlencode:""}}{{ pack.id }}">Install</a>
+                    </a>
+                    {% endwith %}
+                </li>
+            {% endfor %}
+
+            <li data-role="list-divider">Provisioning Profiles</li>
+            {%  for prov in provs  %}
+                <li style="height:80;">
+                    <img class="rounded_icon" src="{{ STATIC_URL }}Application/img/prov.png">
+                    {% url 'main' as main_url %}
+                    <a href="{{ main_url }}/app"  data-transition="slide" ></a>
+                    <a href="{{ MEDIA_URL }}{{ prov.profile_path }}" data-ajax="false">Install Provisioning Profile </a>
+                </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+
+
+{% endblock %}
+
