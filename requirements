@@ -1,2 +1,6 @@
 biplist
 django
+Pillow
+south
+absolute
+django-mobile

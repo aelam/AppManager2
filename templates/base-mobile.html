@@ -4,9 +4,11 @@
     <title>InnerAppStore {% if flavour == "mobile" %}(mobile version){% endif %}</title>
 
     <meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <!-- provide the splash screens for iPhone 5 and previous -->
     <link href="assets/splashs/splash_1096.png" rel="apple-touch-startup-image" media="(device-height: 568px)">
     <link href="assets/splashs/splash_iphone_2x.png" rel="apple-touch-startup-image" sizes="640x960" media="(device-height: 480px)">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -46,9 +48,9 @@
         {% endblock %}
     </div><!-- /content -->
 
-    <div data-role="footer" data-position="fixed">
-        <h1>{% if flavour == "mobile" %}(mobile version){% endif %}</h1>
-    </div>
+{#    <div data-role="footer" data-position="fixed">#}
+{#        <h1>{% if flavour == "mobile" %}(mobile version){% endif %}</h1>#}
+{#    </div>#}
 
 
 </div><!-- /page -->

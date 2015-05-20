@@ -33,9 +33,8 @@ def app_list(request):
     upload_file_form = UploadFileForm()
 
     host = get_host(request)
-    TEST = get_script_prefix()
 
-    return render_to_response('Application/app_list.html', {'TEST':TEST, 'apps': apps, 'provs': provs, 'host': host, 'form': upload_file_form}, RequestContext(request))
+    return render_to_response('Application/app_list.html', {'apps': apps, 'provs': provs, 'host': host, 'form': upload_file_form}, RequestContext(request))
 
 
 # @login_required
@@ -45,7 +44,7 @@ def app_detail(request, app_id):
     packages = Package.objects.filter(app_id = app_id)
     upload_file_form = UploadFileForm()
     host = get_host(request)
-    return render(request, "Application/app_detail2.html", {"host": host, 'app': app, "packages": packages, 'form': upload_file_form})
+    return render(request, "Application/app_detail.html", {"host": host, 'app': app, "packages": packages, 'form': upload_file_form})
 
 
 def app_packages_list(request, app_id):

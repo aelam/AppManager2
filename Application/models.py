@@ -55,7 +55,7 @@ class ProvisioningProfile(models.Model):
 class App(models.Model):
     app_identifier = models.CharField(max_length=60, unique=True)
     app_name = models.CharField(max_length=60)
-    app_store_id = models.CharField(max_length=100, null=True)
+    app_store_id = models.CharField(max_length=100, null=True, blank=True)
 
     def __unicode__(self):
         return u"%s" % self.app_name
@@ -78,8 +78,7 @@ class Package(models.Model):
 
     release_note = models.TextField(null=True, blank=True)
 
-    #TODO
-    provision = models.ForeignKey(ProvisioningProfile, null=True)
+    provision = models.ForeignKey(ProvisioningProfile, null=True, blank=True)
 
     def __unicode__(self):
         return "%s-%s " % (self.bundle_identifier, self.bundle_version)
@@ -96,7 +95,8 @@ class Package(models.Model):
         ipa_parser = IPAParser(self.ipa_path)
         self.bundle_identifier = ipa_parser.bundle_identifier()
         self.bundle_version = ipa_parser.version()
-        self.bundle_name = ipa_parser.bundle_short_version()
+        self.bundle_short_version = ipa_parser.bundle_short_version()
+        self.bundle_name = ipa_parser.bundle_name()
 
         # copy icon to media path
         icon = ipa_parser.icon()

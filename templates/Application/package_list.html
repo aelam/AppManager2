@@ -1,17 +1,55 @@
-{% extends "base.html" %}
+{% extends "base-mobile.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}Application/css/app.css" type="text/css" charset="utf-8">
+{% endblock %}
+{% block title %}{{ app.app_name }} {% endblock %}
+
+    {% block header %}
+        <h3 >{{ app.app_name }} </h3>
+         <a href="{% url 'main' %}" class="ui-btn-left ui-btn ui-btn-up-b ui-btn-icon-left " data-rel="back" data-icon="arrow-l" data-theme="b">
+            <span class="ui-btn-inner">
+                <span class="ui-btn-text">Back</span>
+                <span class=""></span>
+            </span>
+        </a>
+
+    {% endblock %}
 
 {% block content %}
 
+<div class="content-primary">
+     <ul data-role="listview" data-split-icon="arrow-d"  >
+        <li data-role="list-divider">Apps</li>
+            {%  for pack in packages  %}
+                <li>
+{#                <a href="{% url 'app_detail' app.id %}"  data-transition="slide">#}
+                <a href="#"  data-transition="slide">
+                    {% if pack.icon_path  %}
+                        <img class="rounded_icon" src="{{ MEDIA_URL }}{{ pack.big_icon_path }}" a="middle"/>
+                    {% else %}
+                        <img class="rounded_icon" src="{{ STATIC_URL }}Application/img/archive.png" a="middle"/>
+                    {% endif %}
 
-{#    {%  for pack in packs  %}#}
-{#        <li> {{ pack.ipa_path }}</li>#}
-{#        <dt>#}
-{#            <a href="/app/{{ app.id }}"> {{ app.app_name }}</a>#}
-{#        </dt>#}
-{#        <button onclick="">Install</button>#}
-{#        <a href="itms-services://?action=download-manifest&url=http://ryan-server.local:8000/app/install/?pack_id={{ pack.id }}"></a>#}
-{#        <a href="itms-services://?action=download-manifest&url=http://ryan-server.local:8000/app/install/?pack_id={{ pack.id }}"></a>#}
+                    <h3>{{ pack.display_name }}</h3>
+                    <p><strong>{{ pack.bundle_short_version }}({{ pack.bundle_version }})</strong></p>
+                    <p>({{ pack.create_at }})</p>
+                    {% url 'app_install' as app_install %}
+                    <a type="button" href="itms-services://?action=download-manifest&url={{BASE_URL|urlencode:""}}{{ app_install|urlencode:"" }}{{"?pack_id="|urlencode:""}}{{ pack.id }}">Install</a>
+                </a>
+            </li>
+        {% endfor %}
 
-{#    {% endfor %}#}
+        <li data-role="list-divider">Provisioning Profiles</li>
+        {%  for prov in provs  %}
+            <li style="height:80;">
+                <img class="rounded_icon" src="{{ STATIC_URL }}Application/img/prov.png">
+                <a href="{{ MEDIA_URL }}{{ prov.profile_path }}" data-ajax="false">Install Provisioning Profile </a>
+            </li>
+        {% endfor %}
+
+    </ul>
+</div>
 
 {% endblock %}
+
