@@ -30,7 +30,6 @@
                     <li>
                     {{ app.get_absolute_url }}
                     <a href="{% url 'apps' %}{{ app.id }}"  data-transition="slide">
-                        {# TODO Lazy loading image #}
                         {% if pack.big_icon_path  %}
                             <img class="rounded_icon lazy" src="{{ MEDIA_URL }}{{ pack.big_icon_path }}" a="middle"/>
                         {% else %}
@@ -46,19 +45,23 @@
                 </li>
             {% endfor %}
 
-            <li data-role="list-divider">Provisioning Profiles</li>
-            {%  for prov in provs  %}
-                <li>
-                    <img class="rounded_icon" src="{{ STATIC_URL }}Application/img/prov.png">
-                    {% url 'main' as main_url %}
-                    <a href="{{ main_url }}/app"  data-transition="slide" ></a>
-                    <a href="{{ MEDIA_URL }}{{ prov.profile_path }}" data-ajax="false">Install Provisioning Profile </a>
-                </li>
-            {% endfor %}
-
+{#            <li data-role="list-divider">Provisioning Profiles</li>#}
+{#            {%  for prov in provs  %}#}
+{#                <li>#}
+{#                    <img class="rounded_icon" src="{{ STATIC_URL }}Application/img/prov.png">#}
+{#                    {% url 'main' as main_url %}#}
+{#                    <a href="{{ main_url }}/app"  data-transition="slide" ></a>#}
+{#                    <a href="{{ MEDIA_URL }}{{ prov.profile_path }}" data-ajax="false">Install Provisioning Profile </a>#}
+{#                </li>#}
+{#            {% endfor %}#}
         </ul>
-    </div>
 
+
+    </div>
+     <div data-role="footer" data-position="fixed">
+            {% url 'prepare' as prepare_url %}
+            <div onclick="location.href='{{ prepare_url }}'" style="width:100%;height:30px; text-align: center; ">无法安装?</div>
+     </div>
 
 {% endblock %}
 

@@ -9,7 +9,7 @@ from django.contrib.sites.models import RequestSite
 import biplist
 import ipaparser
 
-from models import ProvisioningProfile
+from models import ProvisioningProfile, AppManagerInstruction
 from forms import *
 
 
@@ -98,14 +98,7 @@ def pack_upload2(request):
 def package_update(request):
     if request.method == 'POST':
         package = Package(request.POST)
-        print(package)
-        print("---------------------------------")
         package.bundle_identifier = request.POST.get("bundle_identifer", None)
-        print(package)
-        print("package")
-        print("package.bundle_identifier")
-        print(package.bundle_identifier)
-        print(package.id)
         form = UpdatePackageForm(request.POST)
         return render(request, "Application/upload_success.html", context_instance=RequestContext(request))
     else:
@@ -116,4 +109,7 @@ def provisioning_profile_list(request):
     return HttpResponse("provisioning_profile_list")
 
 def prepare(request):
+    instruction =  AppManagerInstruction.objects.first()
+    if instruction:
+        return HttpResponseRedirect(instruction.instuction_url)
     return render(request, "Application/prepare.html", context_instance=RequestContext(request))

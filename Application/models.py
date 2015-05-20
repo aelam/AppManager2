@@ -134,4 +134,7 @@ class Team(models.Model):
     owner = models.ForeignKey(User)
 
 
+class AppManagerInstruction(models.Model):
+    instuction = models.TextField(blank=True, null=True)
+    instuction_url = models.URLField(blank=True, null=True)
 
