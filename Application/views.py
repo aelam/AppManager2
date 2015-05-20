@@ -114,3 +114,6 @@ def package_update(request):
 
 def provisioning_profile_list(request):
     return HttpResponse("provisioning_profile_list")
+
+def prepare(request):
+    return render(request, "Application/prepare.html", context_instance=RequestContext(request))

@@ -15,5 +15,6 @@ urlpatterns = patterns('Application.views',
     url(r'^package/save/$', 'package_update'),
     url(r'^provs/$', 'provisioning_profile_list'),
     url(r"^appstore", "appstore"),
+    url(r"^prepare", "prepare"),
 )
 
