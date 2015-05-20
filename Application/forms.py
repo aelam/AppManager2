@@ -28,7 +28,7 @@ class UploadFileForm(ModelForm):
 class PackageForm(ModelForm):
     class Meta:
         model = Package
-
+        exclude = ()
 
 class UpdatePackageForm(ModelForm):
 
@@ -47,4 +47,5 @@ class UpdatePackageForm(ModelForm):
 class AppForm(ModelForm):
     class Meta:
         model = App
+        exclude = ()
 
